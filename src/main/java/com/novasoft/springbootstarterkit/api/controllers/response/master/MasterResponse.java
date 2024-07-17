@@ -10,8 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MasterResponse {
-
     private String code;
     private String name;
-
 }
