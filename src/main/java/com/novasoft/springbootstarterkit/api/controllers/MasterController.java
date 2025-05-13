@@ -41,12 +41,13 @@ public class MasterController {
     }
 
     @GetMapping("/pagination")
-    public ResponseEntity<BasePaginationResponse<List<MasterResponse>>> pagination(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<BaseResponse<BasePaginationResponse<List<MasterResponse>>>> pagination(@RequestParam int page, @RequestParam int size) {
 
         var masters = masterQuery.pagination(page, size);
-        var response = MasterMapper.INSTANCE.mastersToMasterResponses(masters);
+        var items = MasterMapper.INSTANCE.mastersToMasterResponses(masters);
+        var response = new BasePaginationResponse<>(items, page, size, items.size());
 
-        return new ResponseEntity<>(new BasePaginationResponse<>(response,page, size, SUCCESS, true), HttpStatus.OK);
+        return new ResponseEntity<>(new BaseResponse<>(response, SUCCESS, true), HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
